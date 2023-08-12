@@ -26,7 +26,6 @@ jobs:
         # list of Docker images to use as base name for tags
         images: |
           haravich/custom-ssh-server
-          ghcr.io/haravich/custom-ssh-server
         # generate Docker tags based on the following events/attributes
         tags: |
           type=ref,event=branch
@@ -49,14 +48,6 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     
-    - name: Login to GHCR
-      if: github.event_name != 'pull_request'
-      uses: docker/login-action@v2
-      with:
-        registry: ghcr.io
-        username: ${{ github.repository_owner }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-
     - name: Build and push
       uses: docker/build-push-action@v4
       with:
