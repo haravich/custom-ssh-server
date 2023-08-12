@@ -2,7 +2,10 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - "**"
+    tags:
+      - "v*.*.*"
   pull_request:
     branches: [ "main" ]
 
@@ -16,6 +19,23 @@ jobs:
     - uses: actions/checkout@v3
       name: Checkout code
 
+    - name: Docker meta
+      id: meta
+      uses: docker/metadata-action@v4
+      with:
+        # list of Docker images to use as base name for tags
+        images: |
+          haravich/custom-ssh-server
+          ghcr.io/haravich/custom-ssh-server
+        # generate Docker tags based on the following events/attributes
+        tags: |
+          type=ref,event=branch
+          type=ref,event=pr
+          type=semver,pattern={{version}}
+          type=semver,pattern={{major}}.{{minor}}
+          type=semver,pattern={{major}}
+          type=sha
+
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v2
     
@@ -23,13 +43,23 @@ jobs:
       uses: docker/setup-buildx-action@v2
       
     - name: Login to Docker Hub
+      if: github.event_name != 'pull_request'
       uses: docker/login-action@v2
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
+    
+    - name: Login to GHCR
+      if: github.event_name != 'pull_request'
+      uses: docker/login-action@v2
+      with:
+        registry: ghcr.io
+        username: ${{ github.repository_owner }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
     - name: Build and push
       uses: docker/build-push-action@v4
       with:
-        push: true
-        tags: haravich/custom-ssh-server:latest
-  
+        push: ${{ github.event_name != 'pull_request' }}
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}  
