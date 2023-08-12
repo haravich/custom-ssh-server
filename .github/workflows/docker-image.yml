@@ -31,5 +31,5 @@ jobs:
       uses: docker/build-push-action@v4
       with:
         push: true
-        tags: haravich/custom-ssh-server:latest, haravich/custom-ssh-server:$(date +%s)
+        tags: haravich/custom-ssh-server:latest
   
