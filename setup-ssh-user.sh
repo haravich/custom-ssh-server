@@ -3,10 +3,7 @@
 # Fetch username, password, and public key from environment variables
 SSH_USER="${SSH_USER:-}"
 SSH_PASSWORD="${SSH_PASSWORD:-}"
-SSH_PUBLIC_KEY_UPLOADED="$(cat /ssh-keys/*.pub)"
 SSH_PUBLIC_KEY="${SSH_PUBLIC_KEY:-}"
-
-SSH_PUBLIC_KEY = $(echo "${SSH_PUBLIC_KEY_UPLOADED} \n ${SSH_PUBLIC_KEY}")
 
 # Check if both username, password and public key are provided
 if [ -z "$SSH_USER" ] || [ -z "$SSH_PASSWORD" ] || [ -z "$SSH_PUBLIC_KEY" ]; then

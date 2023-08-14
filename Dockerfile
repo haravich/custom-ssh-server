@@ -8,7 +8,6 @@ RUN apk update && \
 # Copy the custom script, sshd_config, and host keys
 COPY setup-ssh-user.sh /usr/local/bin/
 COPY ssh-host-keys/* /etc/ssh/
-COPY ssh-keys/*.pub /ssh-keys/
 COPY sshd_config /etc/ssh/
 RUN chmod +x /usr/local/bin/setup-ssh-user.sh
 

@@ -51,7 +51,7 @@ Before you begin, ensure you have the following installed:
 
     ```bash
     docker build -t custom-ssh-server .
-    docker run -d -p 2222:22 -e SSH_USER=<desired_username> -e SSH_PASSWORD=<desired_password> custom-ssh-server
+    docker run -d -p 2222:22 -e SSH_USER=<desired_username> -e SSH_PASSWORD=<desired_password> -e SSH_PUBLIC_KEY="<value of public key> | $(cat /ssh-keys/*.pub)" custom-ssh-server
     ```
     Replace <desired_username> and <desired_password> with appropriate values.
 
