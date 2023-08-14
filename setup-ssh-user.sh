@@ -14,9 +14,9 @@ fi
 # Create the user and set up password or public key authentication
 adduser -D -s /bin/bash "$SSH_USER"
 
-if [ -z "$SSH_PASSWORD" ]; then
-    echo "$SSH_USER:$SSH_PASSWORD" | chpasswd
-fi
+# User is activated here eventhough if SSH_PASSWORD is not set  
+# running this enables the user and can be used with key based auth
+echo "$SSH_USER:$SSH_PASSWORD" | chpasswd 
 
 mkdir -p /home/"$SSH_USER"/.ssh
 if [ -n "$SSH_PUBLIC_KEY" ]; then
