@@ -6,14 +6,18 @@ SSH_PASSWORD="${SSH_PASSWORD:-}"
 SSH_PUBLIC_KEY="${SSH_PUBLIC_KEY:-}"
 
 # Check if both username, password and public key are provided
-if [ -z "$SSH_USER" ] || [ -z "$SSH_PASSWORD" ] || [ -z "$SSH_PUBLIC_KEY" ]; then
-    echo "SSH_USER, SSH_PASSWORD and SSH_PUBLIC_KEY environment variables must be set."
+if [ -z "$SSH_USER" ] || ([ -z "$SSH_PASSWORD" ] && [ -z "$SSH_PUBLIC_KEY" ]); then
+    echo "SSH_USER, SSH_PASSWORD or SSH_PUBLIC_KEY environment variables must be set."
     exit 1
 fi
 
 # Create the user and set up password or public key authentication
 adduser -D -s /bin/bash "$SSH_USER"
-echo "$SSH_USER:$SSH_PASSWORD" | chpasswd
+
+if [ -z "$SSH_PASSWORD" ]; then
+    echo "$SSH_USER:$SSH_PASSWORD" | chpasswd
+fi
+
 mkdir -p /home/"$SSH_USER"/.ssh
 if [ -n "$SSH_PUBLIC_KEY" ]; then
     echo "$SSH_PUBLIC_KEY" >> /home/"$SSH_USER"/.ssh/authorized_keys
