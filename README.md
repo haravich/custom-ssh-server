@@ -1,8 +1,8 @@
 # Custom SSH Server Docker Setup
 
-This repository contains a Docker setup for creating a custom SSH server based on Alpine Linux. The setup includes the ability to use static SSH host keys, configure SSH key and password authentication, and set up user-specific SSH key pairs.
+[![Build](https://github.com/haravich/custom-ssh-server/actions/workflows/docker-image.yml/badge.svg)](https://github.com/haravich/custom-ssh-server/actions/workflows/docker-image.yml)![Docker pulls](https://img.shields.io/docker/pulls/haravich/custom-ssh-server)
 
-[![Build](https://github.com/haravich/custom-ssh-server/actions/workflows/docker-image.yml/badge.svg)](https://github.com/haravich/custom-ssh-server/actions/workflows/docker-image.yml)
+This repository contains a Docker setup for creating a custom SSH server based on Alpine Linux. The setup includes the ability to use static SSH host keys, configure SSH key and password authentication, and set up user-specific SSH key pairs.
 
 ## Table of Contents
 
