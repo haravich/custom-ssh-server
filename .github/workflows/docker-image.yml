@@ -24,7 +24,8 @@ jobs:
     steps:
     - uses: actions/checkout@v3
       name: Checkout code
-- name: Run curl command to get latest version
+    
+    - name: Run date command to get latest version
       id: curl_output
       run: |
         tag_name=$(date +"%y.%m.0")
